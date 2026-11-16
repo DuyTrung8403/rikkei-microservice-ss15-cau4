@@ -26,9 +26,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 // Quản lý phiên Stateless
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Phân quyền cho endpoint
+                // Phân quyền cho endpoint: permitAll cho /api/auth/login, /api/auth/refresh, /api/auth/**
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/refresh", "/api/auth/register", "/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
