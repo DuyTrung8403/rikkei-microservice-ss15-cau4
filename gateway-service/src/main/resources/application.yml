@@ -1,0 +1,32 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: course-service-route
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/courses/**
+            - id: identity-service-route
+              uri: http://localhost:8080
+              predicates:
+                - Path=/api/auth/**
+      routes:
+        - id: course-service-route-legacy
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/courses/**
+        - id: identity-service-route-legacy
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/auth/**
+
+jwt:
+  # Secret Key dùng chung với Identity Service
+  secret: "vS6K5vH8N2zB4xR9mQ3pL1wT7yC5vH8N2zB4xR9mQ3pL1wT7yC5vH8N2z"
